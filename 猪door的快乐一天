@@ -26,7 +26,10 @@ class Zhudoor(Eat,Sleep,kouhai):
         else:
             print('猪door在睡觉，起来就要口嗨了')
             
-zhuge = Zhudoor()
-print('Sleeping?',zhuge.sleeping)
-print('Eating?',zhuge.eating)
-zhuge.current_status()
+
+if __name__ == '__main__':
+    # Just for Test Zhudoor whether is alive or not
+    zhuge = Zhudoor()
+    print('Sleeping?',zhuge.sleeping)
+    print('Eating?',zhuge.eating)
+    zhuge.current_status()
