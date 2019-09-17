@@ -1,0 +1,56 @@
+import csv
+import json
+import requests
+import time
+import random
+
+# To get stats info from 1 video
+def require_video(a_id):
+    time.sleep(random.choice([0.3,0.4,0.5]))
+    URL = "https://api.bilibili.com/x/web-interface/view?aid={}&cid".format(a_id)
+    info = requests.get(URL).json()
+    temp_1 = [-1] * 13
+    if info["code"] == 0:
+        title = info['data']['title']
+        tname = info['data']['tname']
+        ctime = info['data']['ctime']
+        up    = info['data']["owner"]['name']
+        aid   = info['data']['stat']['aid']
+        view  = info['data']['stat']['view']
+        danmu = info['data']['stat']['danmaku']
+        reply = info['data']['stat']['reply']
+        coins = info['data']['stat']['coin']
+        favorite = info['data']['stat']['favorite']
+        share = info['data']['stat']['share']
+        like  = info['data']['stat']['like']
+        dislike = info['data']['stat']['dislike']
+        temp = [title,tname,ctime,up,aid,view,danmu,reply,coins,favorite,share,like,dislike]
+        return temp
+    else:
+        return temp_1
+        
+# For any video  
+def main_1(textname,start,end):
+    number = 0
+    out = open(textname,'a',newline='')
+    csv_write = csv.writer(out)
+    csv_write.writerow(["title",'tname','ctime','up',"aid",'view',
+                                           "danmu","reply","coins",'favorite',"share",'like','dislike'])
+    for video_id in range(start,end):
+        video = require_video(video_id)
+        if(video[0] == -1):
+            print("av"+str(start + number)+"不存在")
+            number += 1
+        else: 
+            print("av"+str(video[4])+"标题是："+str(video[0]))
+            number += 1
+        csv_write.writerow(video)
+    print("总共"+str(number)+'已完成')
+    
+
+
+if __name__ == '__main__':
+    start = int(input('Enter the Start number:'))
+    end = int(input('Enter the End number:'))
+    filename = 'data_{0}_{1}.csv'.format(start,end)
+    main_1(filename,start,end)
