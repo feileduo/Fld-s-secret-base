@@ -1,0 +1,67 @@
+## Time Recorder 
+import time as t
+
+class Mytimer1:
+    """Record Time"""
+    def __init__(self):
+        self.last = 'Not Recording Yet!'
+        self.unit = ['year','month','day','hours','mins','seconds']
+        self.begining = 0
+        
+    def __str__(self):
+        return self.last
+    
+    def __repr__(self):
+        return self.last
+    
+    def __add__(self,other):
+        temp = 'Total time is :'
+        result = [] 
+        for index in range(6):
+            result.append(self.during[index] + other.during[index])
+            if result[index] >=60:
+                result[index] -= 60
+                result[index-1] +=1
+        for index in range(6):
+            if result[index]:
+                print(temp + str(result[index]) +" " +  self.unit[index])
+    
+    def start(self):
+        print('Start Recording')
+        self.begining = t.localtime()
+        
+    def stop(self):
+        if not self.begining:
+            print('Please Start First!')
+        else:
+            self.end = t.localtime()
+            self._cal()
+            print('Recording Stopped')
+            print(self.last)
+    # Now only works for minutes...   
+    def _cal(self):
+        self.during = []
+        self.last  = 'Cost time is:'
+        for index in range(6):
+            self.during.append(self.end[index] - self.begining[index])
+            if self.during[index] <0:
+                self.during[index-1] -=1
+                self.during[index] = 60 + self.during[index]
+        for index in range(6):
+            if self.during[index]:
+                self.last += (str(self.during[index]) +" " +  self.unit[index])
+
+if __name__ == '__main__':
+    t1
+    t1 = Mytimer1()
+    t1.start()
+    t.sleep(5)
+    t1.stop()
+    
+    t2 = Mytimer1()
+    t2.start()
+    t.sleep(3)
+    t2.stop()
+    
+    t2
+    print(t1+t2)
