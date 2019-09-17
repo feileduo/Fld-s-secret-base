@@ -1,0 +1,32 @@
+import random as r
+
+class Eat:
+    def __init__(self):
+        self.eating = r.choice([True,False])
+
+class Sleep:
+    def __init__(self):
+        self.sleeping = r.choice([True,False])
+
+class kouhai:
+    def kouhaiing(self):
+        print('猪door正在口嗨中')
+
+class Zhudoor(Eat,Sleep,kouhai):
+    def __init__(self):
+        Eat.__init__(self)
+        Sleep.__init__(self)
+        
+    def current_status(self):
+        if self.sleeping == False:
+            if self.eating == False:
+                self.kouhaiing()
+            else:
+                print('猪door在恰饭，恰完就口嗨')
+        else:
+            print('猪door在睡觉，起来就要口嗨了')
+            
+zhuge = Zhudoor()
+print('Sleeping?',zhuge.sleeping)
+print('Eating?',zhuge.eating)
+zhuge.current_status()
